@@ -22,6 +22,11 @@ public class UserAggregationService {
     @Autowired
     private DataSourcesHolder dataSourcesHolder;
 
+    private static final String ID_FIELD = "id";
+    private static final String USERNAME_FIELD = "username";
+    private static final String NAME_FIELD = "name";
+    private static final String SURNAME_FIELD = "surname";
+
     public AggregationResult getUsers() {
         List<DataSourcesHolder.DataSourceWrapper> ds = dataSourcesHolder.getDataSources();
         List<CompletableFuture<List<User>>> futures = new ArrayList<>();
@@ -34,18 +39,18 @@ public class UserAggregationService {
                     JdbcTemplate jdbcTemplate = new JdbcTemplate(wrp.dataSource());
                     String sql = String.format(
                             "SELECT %s AS id, %s AS username, %s AS name, %s AS surname FROM %s",
-                            wrp.mapping().get("id"),
-                            wrp.mapping().get("username"),
-                            wrp.mapping().get("name"),
-                            wrp.mapping().get("surname"),
+                            wrp.mapping().get(ID_FIELD),
+                            wrp.mapping().get(USERNAME_FIELD),
+                            wrp.mapping().get(NAME_FIELD),
+                            wrp.mapping().get(SURNAME_FIELD),
                             wrp.table()
                     );
 
                     return jdbcTemplate.query(sql, (rs, rowNum) -> new User(
-                            rs.getString("id"),
-                            rs.getString("username"),
-                            rs.getString("name"),
-                            rs.getString("surname")
+                            rs.getString(ID_FIELD),
+                            rs.getString(USERNAME_FIELD),
+                            rs.getString(NAME_FIELD),
+                            rs.getString(SURNAME_FIELD)
                     ));
                 } catch (Exception e) {
                     log.warn("Failed to fetch from {}", wrp.table(), e);
