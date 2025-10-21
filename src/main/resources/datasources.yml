@@ -1,0 +1,35 @@
+data-sources:
+  sources:
+    - name: data-base-1
+      strategy: postgres
+      url: jdbc:postgresql://postgres-1:5432/appdb
+      table: users
+      user: user
+      password: password
+      mapping:
+        id: user_id
+        username: login
+        name: first_name
+        surname: last_name
+    - name: data-base-2
+      strategy: mysql
+      url: jdbc:mysql://mysql:3306/appdb?allowPublicKeyRetrieval=true
+      table: user_table
+      user: user
+      password: password
+      mapping:
+        id: ldap_login
+        username: ldap_login
+        name: name
+        surname: surname
+    - name: data-base-3
+      strategy: postgres
+      url: jdbc:postgresql://postgres-2:5432/appdb
+      table: users
+      user: user
+      password: password
+      mapping:
+        id: id
+        username: username
+        name: name
+        surname: surname

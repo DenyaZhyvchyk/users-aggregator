@@ -1,0 +1,9 @@
+spring:
+  config:
+    import: classpath:datasources.yml
+
+app:
+  drivers:
+    postgres: org.postgresql.Driver
+    mysql: com.mysql.cj.jdbc.Driver
+    oracle: oracle.jdbc.OracleDriver
